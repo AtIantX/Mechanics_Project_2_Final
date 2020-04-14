@@ -1,10 +1,11 @@
 # def main_controller:
-
+from .Variable_Controller import VariableController
 
 class ComputationEngine:
     object1, object2, object3 = None, None, None
     acceleration_2, acceleration_1 = 0, 0
     g, external_force = 0, 0
+    var_control = VariableController()
 
     def __init__(self, object1, object2, object3, g, external_force):
         ComputationEngine.object1 = object1
@@ -28,7 +29,6 @@ class ComputationEngine:
                 ComputationEngine.g)
             self.update_objects(pair[0], ComputationEngine.acceleration_1, ComputationEngine.acceleration_2)
 
-
     @staticmethod
     def compute_accelaration():
         obj1 = ComputationEngine.object1
@@ -44,8 +44,19 @@ class ComputationEngine:
                                                                                     obj1.weight, obj2.weight,
                                                                                     obj1.friction, obj2.friction,
                                                                                     ComputationEngine.g)
-        return [obj1.weight, obj2.weight, obj3.weight, obj1.friction, obj2.friction, obj3.friction, ComputationEngine.g,
-                ComputationEngine.external_force, ComputationEngine.acceleration_2, ComputationEngine.acceleration_1]
+
+        result = [obj1.weight, obj2.weight, obj3.weight, obj1.friction, obj2.friction, obj3.friction,
+                  ComputationEngine.g, ComputationEngine.external_force, ComputationEngine.acceleration_1,
+                  ComputationEngine.acceleration_2]
+
+        # Update All Data
+        # Uncomment Parts to update only some parts
+        # obj1.update_object()
+        # obj2.update_object()
+        # obj3.update_object()
+        ComputationEngine.external_force = ComputationEngine.var_control.get_random_external_force()
+        # Update Section End
+        return result
 
     def update_objects(self, t, acc1, acc2):
         # Update Object 1
@@ -81,3 +92,4 @@ class ComputationEngine:
     def compute_velocity(v_0, a, t):
         velocity = v_0*t + a*t
         return velocity
+

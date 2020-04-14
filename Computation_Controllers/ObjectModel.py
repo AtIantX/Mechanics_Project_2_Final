@@ -1,9 +1,10 @@
 # Description of physical object in the problem
-
+from .Variable_Controller import VariableController
 
 class PhysicalObject:
 
     def __init__(self):
+        self.var_controller = VariableController()
         self.weight = 0
         self.friction = 0
         self.pos = [0, 0]
@@ -14,3 +15,7 @@ class PhysicalObject:
 
     def move_coordinate_y(self, y):
         self.pos[1] = self.pos[1] + y
+
+    def update_object(self):
+        self.weight = self.var_controller.get_random_mass()
+        self.weight = self.var_controller.get_random_friction()

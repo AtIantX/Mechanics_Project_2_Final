@@ -15,8 +15,8 @@ class VariableController:
         mass = randrange(*self.mass_range)
         return mass
 
-    def get_random_friction(self):
-        friction = random()
+    def get_random_friction(self):     # noqa
+        friction = round(random(), 3)
         return friction
 
     def get_random_external_force(self):
